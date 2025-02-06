@@ -22,7 +22,7 @@ export const Navbar=()=> {
       <Link to={"/"}>Movie App</Link>
     </Box>
 
-    <InputGroup startElement={<LuSearch />} endElement={<Box cursor={'pointer'} _hover={{fontWeight:"bold",color:'black'}}><Link to={`/result/${inputValue}`}>Search</Link></Box>} bg={'white'} w="250px" position="absolute" right={4} color={'black'}>
+    <InputGroup startElement={<LuSearch />} endElement={<Box cursor={'pointer'} _hover={{fontWeight:"bold",color:'black'}} onClick={() => {window.location.reload();}}><Link to={`/result/${inputValue}`}>Search</Link></Box>} bg={'white'} w="250px" position="absolute" right={4} color={'black'}>
       <Input placeholder="Search contacts" onChange={inputChange}/>
     </InputGroup>
     

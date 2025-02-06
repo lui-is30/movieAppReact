@@ -13,3 +13,15 @@ export const getSearchMovie=async(title:string)=>{
     const data=await response.json();
     return data.results;
 }
+
+export const getSearchTv=async(title:string)=>{
+    const response=await fetch(`https://api.themoviedb.org/3/search/tv?query=${title}`,OPTS);
+    const data=await response.json();
+    return data.results;
+}
+
+export const getSearchPerson=async(title:string)=>{
+    const response=await fetch(`https://api.themoviedb.org/3/search/person?query=${title}`,OPTS);
+    const data=await response.json();
+    return data.results;
+}

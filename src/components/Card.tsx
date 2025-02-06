@@ -9,7 +9,11 @@ import { Link } from "react-router-dom";
 export const Card1=({props}:MovieCardProps|TvCardProps|PersonCardProps)=>{
   
   let image;
+  let media_type;
+  if(props.media_type)
+     media_type=props.media_type;
 
+  /*
   switch(props.media_type){
     case "movie":
       if("title" in props)
@@ -24,6 +28,25 @@ export const Card1=({props}:MovieCardProps|TvCardProps|PersonCardProps)=>{
         image=props.profile_path;
         break;
   }
+        */
+
+  
+      if("title" in props){
+         image= props.poster_path;
+         media_type="movie";
+      }
+   
+      if("name" in props && "poster_path" in props){
+        image=props.poster_path;
+        media_type="tv";
+      }
+       
+      if("name" in props && "profile_path" in props){
+        image=props.profile_path;
+        media_type="person";
+      }
+        
+  
 
     
     
@@ -36,7 +59,7 @@ export const Card1=({props}:MovieCardProps|TvCardProps|PersonCardProps)=>{
       <Card.Body gap={2}>
       </Card.Body>
       <Card.Footer display="flex" justifyContent="center"  >
-        <Button variant="solid" mt="-15%" ><Link to={`/details/${props.id}/${props.media_type}`}>Details</Link></Button>
+        <Button variant="solid" mt="-15%" ><Link to={`/details/${props.id}/${media_type}`}>Details</Link></Button>
         
       </Card.Footer>
     </Card.Root>
