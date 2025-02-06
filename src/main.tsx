@@ -1,0 +1,26 @@
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import { Provider } from './components/ui/provider.tsx'
+import { BrowserRouter,Route,Routes } from 'react-router-dom'
+
+import './index.css'
+import App from './App.tsx'
+import { Details } from './components/pages/Details.tsx'
+import ResultSearchPages from './components/pages/ResultSearchPages.tsx'
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <Provider>
+
+      <BrowserRouter>
+      <Routes>
+
+      <Route path='/' element={<App />} />
+      <Route path='details/:id/:media_type' element={<Details />} />
+      <Route path='result/:input' element={<ResultSearchPages />} />
+
+      </Routes>
+      </BrowserRouter>
+    </Provider>
+  </StrictMode>,
+)
