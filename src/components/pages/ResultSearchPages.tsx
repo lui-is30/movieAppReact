@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { MovieType } from "../../types/movieTypes";
 import { getSearchMovie } from "../../api/getSearch";
 import { Card1 } from "../Card";
-import { Box,SimpleGrid,Text } from "@chakra-ui/react";
+//import { Box,SimpleGrid,Text } from "@chakra-ui/react";
 
 const ResultSearchPages =()=>{
     const {input}=useParams();
