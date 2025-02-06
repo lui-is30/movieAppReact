@@ -1,40 +1,29 @@
-import { useEffect, useState } from "react";
 import { MovieDetailType } from "../types/movieTypes";
 import { TVDetailType } from "../types/seriesTypes";
 import { PersonDetailType } from "../types/personTypes";
 import { getDetailsMovie, getDetailsPerson, getDetailsTv } from "../api/getDetails";
+import { useQuery } from "@tanstack/react-query";
 
 
-export const useDetails=(id:string,media_type:string)=>{
-    
-        const [movieDetails,setMovieDetails]=useState<MovieDetailType>();
-        const [tvDetails,setTvDetails]=useState<TVDetailType>();
-        const [personDetails,setPersonDetails]=useState<PersonDetailType>();
-    
-    
-        useEffect(()=>{
-            if(media_type==='movie'){
-            const fetchDetails=async()=>{
-                if(id)
-                setMovieDetails(await getDetailsMovie(id));
-            }
-            fetchDetails();
-            }
-            else if(media_type==='tv'){
-            const fetchTvDetails=async()=>{
-                if(id)
-                setTvDetails(await getDetailsTv(id));
-            }
-            fetchTvDetails();
-            }
-            else{
-                const fetchPersonDetails=async()=>{
-                    if(id)
-                    setPersonDetails(await getDetailsPerson(id));
-                }
-                fetchPersonDetails();
-            }
-        },[])
 
-        return {movieDetails,tvDetails,personDetails};
-}
+export const useDetails = (id:string,media_type:string) => {
+    const { data: movie} = useQuery<MovieDetailType>({
+        queryKey: ["movieDetails",id],
+        queryFn: ()=> getDetailsMovie(id),
+        enabled: media_type === "movie" && !!id, 
+    });
+
+    const { data: tv } = useQuery<TVDetailType>({
+        queryKey: ["tvDetails",id],
+        queryFn: ()=> getDetailsTv(id),
+        enabled: media_type === "tv" && !!id,
+    });
+
+    const { data: person } = useQuery<PersonDetailType>({
+        queryKey: ["personDetails",id],
+        queryFn: ()=> getDetailsPerson(id),
+        enabled: media_type === "person" && !!id,
+    });
+
+    return { movie, tv, person };
+};

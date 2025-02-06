@@ -1,33 +1,27 @@
-import { useEffect, useState } from "react";
 import { MovieType } from "../types/movieTypes";
 import { TvTypes } from "../types/seriesTypes";
 import { PersonType } from "../types/personTypes";
 import { getSearchMovie, getSearchPerson, getSearchTv } from "../api/getSearch";
+import { useQuery } from "@tanstack/react-query";
 
-export const useResultSearch=(input:string)=>{
-    const [resultMovie,setResultMovie]=useState<MovieType[]>([]);
-        const [resultTv,setResultTv]=useState<TvTypes[]>([]);
-        const [resultPerson,setResultPerson]=useState<PersonType[]>([]);
-    
-        useEffect(()=>{
-            const fetchSearchMovie=async()=>{
-                if (input)
-                setResultMovie(await getSearchMovie(input));
-            }
-            fetchSearchMovie();
-    
-            const fetchSearchTv=async()=>{
-                if (input)
-                setResultTv(await getSearchTv(input));
-            }
-            fetchSearchTv();
-    
-            const fetchSearchPerson=async()=>{
-                if (input)
-                setResultPerson(await getSearchPerson(input));
-            }
-            fetchSearchPerson();
-        },[])
+export const useResultSearch = (input:string) => {
+    const { data: movie} = useQuery<MovieType[]>({
+        queryKey: ["movieResult",input],
+        queryFn: ()=> getSearchMovie(input),
+        enabled: !!input, 
+    });
 
-        return {resultMovie,resultTv,resultPerson};
-}
+    const { data: tv } = useQuery<TvTypes[]>({
+        queryKey: ["tvResult",input],
+        queryFn: ()=> getSearchTv(input),
+        enabled: !!input,
+    });
+
+    const { data: person } = useQuery<PersonType[]>({
+        queryKey: ["personResult",input],
+        queryFn: ()=> getSearchPerson(input),
+        enabled: !!input,
+    });
+
+    return { movie, tv, person };
+};
