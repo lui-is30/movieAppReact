@@ -13,23 +13,6 @@ export const Card1=({props}:MovieCardProps|TvCardProps|PersonCardProps)=>{
   if(props.media_type)
      media_type=props.media_type;
 
-  /*
-  switch(props.media_type){
-    case "movie":
-      if("title" in props)
-         image= props.poster_path;
-        break;
-    case "tv":
-      if("name" in props && "poster_path" in props)
-        image=props.poster_path;
-        break;
-    case "person":
-      if("name" in props && "profile_path" in props)
-        image=props.profile_path;
-        break;
-  }
-        */
-
   
       if("title" in props){
          image= props.poster_path;
