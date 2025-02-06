@@ -1,31 +1,24 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { MovieType } from "../types/movieTypes";
 import { TvTypes } from "../types/seriesTypes";
 import { PersonType } from "../types/personTypes";
 import { getTrendingMovie, getTrendingPerson, getTrendingSeries } from "../api/getTrending";
 
-export const useCardManage=()=>{
-    const [movie,setMovie]=useState<MovieType[]>([]);
-        const [tv,setTv]=useState<TvTypes[]>([]);
-        const [person,setPerson]=useState<PersonType[]>([]);
-    
-        useEffect(()=>{
-            const fetchMovie=async()=>{
-                setMovie(await getTrendingMovie());
-            }
-    
-            const fetchTv=async()=>{
-                setTv(await getTrendingSeries());
-            }
-    
-            const fetchPerson=async()=>{
-                setPerson(await getTrendingPerson());
-            }
-    
-            fetchMovie();
-            fetchTv();
-            fetchPerson();
-        },[]);
+export const useCardManage = () => {
+    const { data: movie=[] } = useQuery<MovieType[]>({
+        queryKey: ["trendingMovies"],
+        queryFn: getTrendingMovie,
+    });
 
-        return {movie,tv,person};
-}
+    const { data: tv = [] } = useQuery<TvTypes[]>({
+        queryKey: ["trendingTv"],
+        queryFn: getTrendingSeries,
+    });
+
+    const { data: person = [] } = useQuery<PersonType[]>({
+        queryKey: ["trendingPersons"],
+        queryFn: getTrendingPerson,
+    });
+
+    return { movie, tv, person };
+};

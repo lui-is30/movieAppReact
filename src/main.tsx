@@ -7,9 +7,13 @@ import './index.css'
 import App from './App.tsx'
 import { Details } from './components/pages/Details.tsx'
 import ResultSearchPages from './components/pages/ResultSearchPages.tsx'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+
+const queryClient = new QueryClient();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
+    <QueryClientProvider client={queryClient}>
     <Provider>
 
       <BrowserRouter>
@@ -22,5 +26,10 @@ createRoot(document.getElementById('root')!).render(
       </Routes>
       </BrowserRouter>
     </Provider>
+    </QueryClientProvider>
   </StrictMode>,
 )
+
+
+
+

@@ -1,4 +1,3 @@
-
 import { Navbar } from "../Navbar"
 import { useParams } from "react-router-dom"
 
@@ -10,15 +9,14 @@ export const Details=()=>{
 
     const {id,media_type}=useParams();
 
-    let movieDetails;
-    let tvDetails;
-    let personDetails;
+    if(!id || !media_type)
+        return null
 
-    if(id && media_type){
-    movieDetails=useDetails(id,media_type).movieDetails;
-    tvDetails=useDetails(id,media_type).tvDetails;
-    personDetails=useDetails(id,media_type).personDetails;
-    }
+
+    const { movie, tv, person } = useDetails(id,media_type);
+
+    
+    
 
 
         let image;
@@ -38,31 +36,31 @@ export const Details=()=>{
         
 
     if(media_type==='movie'){
-        image=movieDetails?.backdrop_path;
-        title=movieDetails?.title;
-        description=movieDetails?.overview;
-        budget=movieDetails?.budget;
-        original_language=movieDetails?.original_language;
-        runtime=movieDetails?.runtime;
-        genres=movieDetails?.genres;
+        image=movie?.backdrop_path;
+        title=movie?.title;
+        description=movie?.overview;
+        budget=movie?.budget;
+        original_language=movie?.original_language;
+        runtime=movie?.runtime;
+        genres=movie?.genres;
     }
     else if(media_type==='tv'){
-        image=tvDetails?.backdrop_path;
-        title=tvDetails?.name;
-        description=tvDetails?.overview;
-        number_of_season=tvDetails?.number_of_seasons;
-        original_language=tvDetails?.original_language;
-        number_of_episodes=tvDetails?.number_of_episodes;
-        genres=tvDetails?.genres;
+        image=tv?.backdrop_path;
+        title=tv?.name;
+        description=tv?.overview;
+        number_of_season=tv?.number_of_seasons;
+        original_language=tv?.original_language;
+        number_of_episodes=tv?.number_of_episodes;
+        genres=tv?.genres;
     }
     else{
-        image=personDetails?.profile_path;
-        title=personDetails?.name;
-        description=personDetails?.biography;
-        birthday=personDetails?.birthday;
-        known_for_department=personDetails?.known_for_department;
-        place_of_birth=personDetails?.place_of_birth;
-        popularity=personDetails?.popularity;
+        image=person?.profile_path;
+        title=person?.name;
+        description=person?.biography;
+        birthday=person?.birthday;
+        known_for_department=person?.known_for_department;
+        place_of_birth=person?.place_of_birth;
+        popularity=person?.popularity;
     }
 
     
@@ -175,10 +173,6 @@ else{
     </>)
 }
 }
-
-
-
-
 
     
   

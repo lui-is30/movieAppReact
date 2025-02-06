@@ -10,20 +10,17 @@ import { useResultSearch } from "../../hooks/useResultSearch";
 const ResultSearchPages =()=>{
     const {input}=useParams();
 
-    let resultMovie;
-    let resultTv;
-    let resultPerson;
 
-    if(input){
-    resultMovie=useResultSearch(input).resultMovie;
-    resultTv=useResultSearch(input).resultTv;
-    resultPerson=useResultSearch(input).resultPerson;
-    }
+
+    if(!input)
+        return null
+
+    const { movie, tv, person } = useResultSearch(input);
 
 
     return(<>
         <Navbar />
-        {resultMovie &&
+        {movie &&
         <Box mt="6">
             <Box textAlign="center" color="white">
                 <Text textStyle={{sm:"2xl",md:"5xl"}}>Movies</Text>
@@ -31,7 +28,7 @@ const ResultSearchPages =()=>{
             <Box display={"flex"} justifyContent={"center"} alignItems={"center"} mt="6">
         
             <SimpleGrid columns={{sm:1,md:5}} gap={"20px"} >
-                {resultMovie?.map((element)=>{
+                {movie?.map((element)=>{
                     console.log(element);
                         return <Card1 key={element.id} props={element} />})
                     }
@@ -40,7 +37,7 @@ const ResultSearchPages =()=>{
         </Box>
         }
 
-        {resultTv &&
+        {tv &&
         <Box mt="6">
             <Box textAlign="center" color="white">
                 <Text textStyle={{sm:"2xl",md:"5xl"}}>Series</Text>
@@ -48,7 +45,7 @@ const ResultSearchPages =()=>{
             <Box display={"flex"} justifyContent={"center"} alignItems={"center"} mt="6">
         
             <SimpleGrid columns={{sm:1,md:5}} gap={"20px"} >
-                {resultTv?.map((element)=>{
+                {tv?.map((element)=>{
                     console.log(element);
                         return <Card1 key={element.id} props={element} />})
                     }
@@ -57,7 +54,7 @@ const ResultSearchPages =()=>{
         </Box>
         }
 
-        {resultPerson &&
+        {person &&
         <Box mt="6">
             <Box textAlign="center" color="white">
                 <Text textStyle={{sm:"2xl",md:"5xl"}}>Actors</Text>
@@ -65,7 +62,7 @@ const ResultSearchPages =()=>{
             <Box display={"flex"} justifyContent={"center"} alignItems={"center"} mt="6">
         
             <SimpleGrid columns={{sm:1,md:5}} gap={"20px"} >
-                {resultPerson?.map((element)=>{
+                {person?.map((element)=>{
                     console.log(element);
                         return <Card1 key={element.id} props={element} />})
                     }
