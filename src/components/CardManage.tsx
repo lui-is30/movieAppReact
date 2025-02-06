@@ -1,37 +1,16 @@
-import { useEffect, useState } from "react";
-import { getTrendingMovie, getTrendingPerson, getTrendingSeries } from "../api/getTrending";
-import { MovieType } from "../types/movieTypes";
+
 import { Card1 } from "./Card";
 import { Box, SimpleGrid,Text } from "@chakra-ui/react"
-import { TvTypes } from "../types/seriesTypes";
-import { PersonType } from "../types/personTypes";
+
+import { useCardManage } from "../hooks/useCardManage";
 
 
 
 export const CardManage=()=>{
-    const [movie,setMovie]=useState<MovieType[]>([]);
-    const [tv,setTv]=useState<TvTypes[]>([]);
-    const [person,setPerson]=useState<PersonType[]>([]);
-
-    useEffect(()=>{
-        const fetchMovie=async()=>{
-            setMovie(await getTrendingMovie());
-        }
-
-        const fetchTv=async()=>{
-            setTv(await getTrendingSeries());
-        }
-
-        const fetchPerson=async()=>{
-            setPerson(await getTrendingPerson());
-        }
-
-        fetchMovie();
-        fetchTv();
-        fetchPerson();
-    },[]);
-
     
+const movie=useCardManage().movie;
+const tv=useCardManage().tv;
+const person=useCardManage().person;
    
 
     return(<>

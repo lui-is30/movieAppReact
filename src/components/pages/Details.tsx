@@ -1,19 +1,25 @@
-import { useEffect, useState } from "react";
+
 import { Navbar } from "../Navbar"
 import { useParams } from "react-router-dom"
-import { MovieDetailType } from "../../types/movieTypes";
-import { getDetailsMovie, getDetailsPerson, getDetailsTv } from "../../api/getDetails";
+
 import { Box, Heading, Image, Table,Text } from "@chakra-ui/react";
-import { TVDetailType } from "../../types/seriesTypes";
-import { PersonDetailType } from "../../types/personTypes";
+
+import { useDetails } from "../../hooks/useDetails";
 
 export const Details=()=>{
 
     const {id,media_type}=useParams();
 
-    const [movieDetails,setMovieDetails]=useState<MovieDetailType>();
-    const [tvDetails,setTvDetails]=useState<TVDetailType>();
-    const [personDetails,setPersonDetails]=useState<PersonDetailType>();
+    let movieDetails;
+    let tvDetails;
+    let personDetails;
+
+    if(id && media_type){
+    movieDetails=useDetails(id,media_type).movieDetails;
+    tvDetails=useDetails(id,media_type).tvDetails;
+    personDetails=useDetails(id,media_type).personDetails;
+    }
+
 
         let image;
         let title;
@@ -29,30 +35,7 @@ export const Details=()=>{
         let place_of_birth;
         let popularity;
 
-    useEffect(()=>{
-        if(media_type==='movie'){
-        const fetchDetails=async()=>{
-            if(id)
-            setMovieDetails(await getDetailsMovie(id));
-        }
-        fetchDetails();
-        }
-        else if(media_type==='tv'){
-        const fetchTvDetails=async()=>{
-            if(id)
-            setTvDetails(await getDetailsTv(id));
-        }
-        fetchTvDetails();
-        }
-        else{
-            const fetchPersonDetails=async()=>{
-                if(id)
-                setPersonDetails(await getDetailsPerson(id));
-            }
-            fetchPersonDetails();
-        }
-    },[])
-
+        
 
     if(media_type==='movie'){
         image=movieDetails?.backdrop_path;

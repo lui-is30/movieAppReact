@@ -1,40 +1,24 @@
 import { useParams } from "react-router-dom";
 import { Navbar } from "../Navbar";
-import { useEffect, useState } from "react";
-import { MovieType } from "../../types/movieTypes";
-import { getSearchMovie, getSearchPerson, getSearchTv } from "../../api/getSearch";
+
 import { Card1 } from "../Card";
 import { Box,SimpleGrid,Text } from "@chakra-ui/react";
-import { TvTypes } from "../../types/seriesTypes";
-import { PersonType } from "../../types/personTypes";
-//import { Box,SimpleGrid,Text } from "@chakra-ui/react";
+
+import { useResultSearch } from "../../hooks/useResultSearch";
+
 
 const ResultSearchPages =()=>{
     const {input}=useParams();
 
-    const [resultMovie,setResultMovie]=useState<MovieType[]>([]);
-    const [resultTv,setResultTv]=useState<TvTypes[]>([]);
-    const [resultPerson,setResultPerson]=useState<PersonType[]>([]);
+    let resultMovie;
+    let resultTv;
+    let resultPerson;
 
-    useEffect(()=>{
-        const fetchSearchMovie=async()=>{
-            if (input)
-            setResultMovie(await getSearchMovie(input));
-        }
-        fetchSearchMovie();
-
-        const fetchSearchTv=async()=>{
-            if (input)
-            setResultTv(await getSearchTv(input));
-        }
-        fetchSearchTv();
-
-        const fetchSearchPerson=async()=>{
-            if (input)
-            setResultPerson(await getSearchPerson(input));
-        }
-        fetchSearchPerson();
-    },[])
+    if(input){
+    resultMovie=useResultSearch(input).resultMovie;
+    resultTv=useResultSearch(input).resultTv;
+    resultPerson=useResultSearch(input).resultPerson;
+    }
 
 
     return(<>
